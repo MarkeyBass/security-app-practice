@@ -46,9 +46,9 @@ export const signin = async (req, res) => {
 
 export const login = async (req, res) => {
   // POST /auth/login
-  // BODY {password, email}
+  // req.body {password, email}
   // mongo find user
   // bcrypt - compare req.password, user.password
-  // jwt - sign token
+  // jwt - sign token {firstName, lastName, _id}
   // res.body -> token
 }
