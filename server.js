@@ -4,6 +4,7 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 import todos from "./routes/todos.js";
+import auth from "./routes/auth.js";
 import { getMongoDb, initMongoDb } from "./utils/db.js";
 
 // Body parser
@@ -30,6 +31,7 @@ app.get("/", async (req, res) => {
 });
 
 app.use("/todos", todos);
+app.use("/auth", auth);
 
 app.listen(PORT, async () => {
   await initMongoDb();
