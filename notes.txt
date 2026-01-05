@@ -1,0 +1,6 @@
+Mongo Notes:
+===============
+docker exec -it mongodb mongosh -u admin -p password123
+show dbs
+use todos
+db.todos.find()
