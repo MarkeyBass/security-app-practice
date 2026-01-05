@@ -4,7 +4,7 @@ import {  signin } from "../controllers/auth.js";
 const router = express.Router();
 
 router.route("/signin")
-  .get(signin)
+  .post(signin)
 
 export default router;
 
