@@ -42,3 +42,13 @@ export const signin = async (req, res) => {
     res.status(500).json({ success: false, data: error.message });
   }
 };
+
+
+export const login = async (req, res) => {
+  // POST /auth/login
+  // BODY {password, email}
+  // mongo find user
+  // bcrypt - compare req.password, user.password
+  // jwt - sign token
+  // res.body -> token
+}
