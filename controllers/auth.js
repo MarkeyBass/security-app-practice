@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import { signJwt } from "../utils/auth.js";
 
 export const signin = async (req, res) => {
   /**
@@ -122,16 +122,11 @@ export const login = async (req, res) => {
     }
 
     // Step 6: Sign JWT token
-    const JWT_SECRET = process.env.JWT_SECRET || "jwt-secret-123";
-    const token = jwt.sign(
-      {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        _id: user._id.toString(),
-      },
-      JWT_SECRET,
-      { expiresIn: "1h" }
-    );
+    const token = signJwt({
+      firstName: user.firstName,
+      lastName: user.lastName,
+      _id: user._id.toString(),
+    },);
 
     // Step 7: Return success response with token
     res.status(200).json({

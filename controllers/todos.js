@@ -142,6 +142,7 @@ export const createTodo = async (req, res) => {
     const now = new Date();
 
     const newTodo = {
+      userId: req.user._id,
       title: req.body.title || "default todo",
       description: req.body.description || "",
       completed: isCompleted,
