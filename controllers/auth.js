@@ -3,6 +3,7 @@ import { signJwt } from "../utils/auth.js";
 
 export const signin = async (req, res) => {
   /**
+   * TODO:
    * SIGNIN FLOW:
    * 1. Extract user data from request body (firstName, lastName, address, email, password)
    * 2. Get MongoDB connection and users collection
@@ -71,6 +72,7 @@ export const signin = async (req, res) => {
 
 export const login = async (req, res) => {
   /**
+   * TODO:
    * LOGIN FLOW:
    * 1. Extract credentials from request body (email, password)
    * 2. Get MongoDB connection and users collection

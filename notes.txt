@@ -4,3 +4,8 @@ docker exec -it mongodb mongosh -u admin -p password123
 show dbs
 use todos
 db.todos.find()
+
+
+todos> db.users.find()
+todos> db.users.updateOne({_id: ObjectId('695d61dbd86095e740596c96')}, {$set: {"role": "admin"}})
+todos> db.users.findOne({_id: ObjectId('695d61dbd86095e740596c96')})

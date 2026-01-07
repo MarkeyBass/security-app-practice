@@ -1,4 +1,11 @@
 import { ObjectId } from "mongodb";
+import { isAuthorized } from "../utils/auth.js";
+
+/**
+ * TODO:
+ * GET TODOS FLOW:
+ * 1. Add isAuthorized check to ensure user is authorized to access todos to createTodo, updateTodo, deleteTodo
+ */
 
 // {baseUrl}/todos
 // {baseUrl}/todos?completed=true
@@ -72,6 +79,10 @@ export const updateTodo = async (req, res) => {
         .json({ success: false, data: {}, message: `todo with the id of ${id} not found` });
     }
 
+    if (!isAuthorized(req.user, todo)) {
+      return res.status(403).json({ success: false, data: {}, message: "Forbidden" });
+    }
+
     // Build update object dynamically based on provided fields
     const updateFields = {};
 
@@ -124,6 +135,10 @@ export const deleteTodo = async (req, res) => {
         .json({ success: false, data: {}, message: `Todo with id ${id} not found` });
     }
 
+    if (!isAuthorized(req.user, todo)) {
+      return res.status(403).json({ success: false, data: {}, message: "Forbidden" });
+    }
+
     await todosCollection.deleteOne({ _id: objectId });
     res.status(200).json({ success: true, data: {} });
   } catch (error) {
@@ -140,6 +155,10 @@ export const createTodo = async (req, res) => {
     const todosCollection = mongoConn.collection("todos");
 
     const now = new Date();
+
+    /**
+     * TODO: bind todo to a specific user by adding `userId: req.user._id`
+     */
 
     const newTodo = {
       userId: req.user._id,

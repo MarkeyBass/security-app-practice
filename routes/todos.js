@@ -4,6 +4,12 @@ import { protect } from "../middleware/auth.js";
 
 const router = express.Router();
 
+/**
+ * TODO:
+ * Add protect middleware to all routes
+ * protect middleware will check if user is logged in to access POST, PUT, DELETE routes
+ */
+
 router.route("/")
   .get(getTodos)
   .post(protect, createTodo);

@@ -1,9 +1,9 @@
 import { ObjectId } from "mongodb";
 import { verifyJwt } from "../utils/auth.js";
 
-
 export async function protect(req, res, next) {
   /**
+   * TODO:
    * PROTECT MIDDLEWARE FLOW:
    * 1. Extract JWT token from Authorization header (format: "Bearer <token>")
    *    - If no Authorization header or doesn't start with "Bearer": return 401 error
@@ -48,7 +48,7 @@ export async function protect(req, res, next) {
     // Step 6: Query MongoDB users collection to find user by _id
     const user = await req.mongoConn.collection("users").findOne({ _id: new ObjectId(userId) });
 
-    console.log(user);
+    console.log({ user });
 
     if (!user) {
       console.log("No user was found");
@@ -56,7 +56,12 @@ export async function protect(req, res, next) {
     }
 
     // Step 7: Attach user data to request object
-    req.user = { _id: user._id, firstName: user.firstName, lastName: user.lastName };
+    req.user = {
+      _id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      role: user.role || null,
+    };
 
     // Step 8: Call next() to proceed to the next middleware/route handler
     next();
@@ -67,12 +72,4 @@ export async function protect(req, res, next) {
   }
 }
 
-// export function authorizeResource(resource) {
-//   return (req, res, next) => {
-//     if (req.user._id !== resource._id) {
-//       return res.status(403).json({ success: false, message: "Forbidden" });
-//     }
-//     next();
-//   };
-// }
 
