@@ -1,6 +1,5 @@
 import express from "express";
 import { createTodo, deleteTodo, getTodo, getTodos, updateTodo } from "../controllers/todos.js";
-import { protect } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -12,11 +11,11 @@ const router = express.Router();
 
 router.route("/")
   .get(getTodos)
-  .post(protect, createTodo);
+  .post(createTodo);
 router.route("/:id")
   .get(getTodo)
-  .put(protect, updateTodo)
-  .delete(protect, deleteTodo);
+  .put(updateTodo)
+  .delete(deleteTodo);
 
 export default router;
 

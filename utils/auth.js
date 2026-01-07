@@ -1,7 +1,3 @@
-import jwt from "jsonwebtoken";
-const jwtSecret = process.env.JWT_SECRET || "change-this-secret";
-const jwtExpire = process.env.JWT_EXPIRE || "1h";
-
 export function signJwt(payload) {
   /**
    * TODO:
@@ -10,13 +6,6 @@ export function signJwt(payload) {
    * 2. Sign token with secret and expiration time
    * 3. Return signed JWT token string
    */
-  return jwt.sign(
-    {
-      ...payload
-    },
-    jwtSecret,
-    { expiresIn: jwtExpire }
-  );
 }
 
 export function verifyJwt(token) {
@@ -27,9 +16,7 @@ export function verifyJwt(token) {
    * 2. Return decoded payload if valid
    * 3. Throw error if invalid/expired (handled by caller)
    */
-  return jwt.verify(token, jwtSecret);
 }
-
 
 export function isAuthorized(user, resource) {
   /**
@@ -39,13 +26,4 @@ export function isAuthorized(user, resource) {
    * 2. Return true if user is authorized
    * 3. Return false if user is not authorized
    */
-  if (
-    !resource.userId ||
-    user.role === "admin" ||
-    user._id.toString() === resource.userId.toString()
-  ) {
-    return true;
-  } else {
-    return false;
-  }
 }

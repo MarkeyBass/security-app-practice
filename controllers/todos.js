@@ -1,5 +1,4 @@
 import { ObjectId } from "mongodb";
-import { isAuthorized } from "../utils/auth.js";
 
 /**
  * TODO:
@@ -79,10 +78,6 @@ export const updateTodo = async (req, res) => {
         .json({ success: false, data: {}, message: `todo with the id of ${id} not found` });
     }
 
-    if (!isAuthorized(req.user, todo)) {
-      return res.status(403).json({ success: false, data: {}, message: "Forbidden" });
-    }
-
     // Build update object dynamically based on provided fields
     const updateFields = {};
 
@@ -135,10 +130,6 @@ export const deleteTodo = async (req, res) => {
         .json({ success: false, data: {}, message: `Todo with id ${id} not found` });
     }
 
-    if (!isAuthorized(req.user, todo)) {
-      return res.status(403).json({ success: false, data: {}, message: "Forbidden" });
-    }
-
     await todosCollection.deleteOne({ _id: objectId });
     res.status(200).json({ success: true, data: {} });
   } catch (error) {
@@ -161,7 +152,6 @@ export const createTodo = async (req, res) => {
      */
 
     const newTodo = {
-      userId: req.user._id,
       title: req.body.title || "default todo",
       description: req.body.description || "",
       completed: isCompleted,
